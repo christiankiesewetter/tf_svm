@@ -73,7 +73,7 @@ class SVMModel(Model):
         gradients = tape.gradient(loss, self.trainable_variables)
         self.optimizer.apply_gradients(zip(gradients, self.trainable_variables))
         self.compiled_metrics.update_state(y, y_hat)
-        accuracy = 1. - tf.reduce_mean(tf.abs(y - tf.where(y_hat > 0., 1., -1.)))
+        accuracy = 1. - tf.reduce_mean(tf.abs(y - tf.where(y_hat > 0, 1., -1.)))
         res = {
             'acuracy': accuracy,
             'loss':loss

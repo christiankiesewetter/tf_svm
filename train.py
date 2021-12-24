@@ -1,7 +1,7 @@
 from svm import SVMModel
 import numpy as np
 import tensorflow as tf
-from tensorflow.keras.datasets.fashion_mnist import load_data
+from tensorflow.keras.datasets.mnist import load_data
 
 def get_data(c=1):
     (X_train, y_train), (X_val , y_val) = load_data()
@@ -19,9 +19,9 @@ if __name__ == '__main__':
     X_train, y_train, X_val, y_val = get_data()
     svm = SVMModel(
         dimensions = X_train.shape[1],
-        rbf = True,
+        rbf = False,
         C = 90)
     svm.compile(optimizer=tf.keras.optimizers.Adam(lr=0.5e-03))
     svm.fit(X_train, y_train, epochs = 100)
-    example = np.where(y_train != 1.)[0][1]
+    example = np.where(y_train == 1.)[0][1]
     print(svm(X_train[example,:]).numpy(), y_train[example,:])
